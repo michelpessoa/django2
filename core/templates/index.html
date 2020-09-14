@@ -1,0 +1,53 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    {% bootstrap_css %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <script src="{% static 'js/libery.js'%}"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Produtos</h1>
+
+    <table class="table table-dark">
+        <thead>
+        <th scope="col">#</th>
+        <th scope="col">Produto</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Estoque</th>
+        </thead>
+        <tbody>
+        {% for produto in produtos %}
+        <tr>
+            <td scope="row">{{ produto.id }}</td>
+            <td scope="row"><a data-toggle="modal" href="#modal{{produto.id}}" onmouseover="showImg({{produto.id}})">
+                {{ produto.nome }}</a></td>
+            <td scope="row">{{ produto.preco }}</td>
+            <td scope="row">{{ produto.estoque }}</td>
+        </tr>
+        <div class="modal fade bd-example-modal.lg show" id="modal{{produto.id}}" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="dynamic-content">
+                        <img alt="{{produto.nome}}" class="img-fluid" src="{{ produto.imagem.url }}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% bootstrap_javascript jquery='full' %}
+</body>
+</html>
